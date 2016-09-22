@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="StudentTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ProficiencyLevel">
+    <Key>
+      <PropertyRef Name="proficiencyId" />
+    </Key>
+    <Property Name="proficiencyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="proficiencyLevel1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Resources" Relationship="Self.FK_Resources_ProficiencyLevel" FromRole="ProficiencyLevel" ToRole="Resources" />
+    <NavigationProperty Name="Students" Relationship="Self.FK_Student_ProficiencyLevel" FromRole="ProficiencyLevel" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="questionId" />
+    </Key>
+    <Property Name="questionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="questionDecription" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="helpText" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="StudentResponses" Relationship="Self.FK_StudentResponse_Questions" FromRole="Questions" ToRole="StudentResponse" />
+  </EntityType>
+  <EntityType Name="Resource">
+    <Key>
+      <PropertyRef Name="resourceId" />
+    </Key>
+    <Property Name="resourceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="resourceName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="resourceLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="proficiencyId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ProficiencyLevel" Relationship="Self.FK_Resources_ProficiencyLevel" FromRole="Resources" ToRole="ProficiencyLevel" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="studentId" />
+    </Key>
+    <Property Name="studentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="firstName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="universityName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="proficiencyId" Type="Int32" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ProficiencyLevel" Relationship="Self.FK_Student_ProficiencyLevel" FromRole="Student" ToRole="ProficiencyLevel" />
+    <NavigationProperty Name="StudentResponses" Relationship="Self.FK_StudentResponse_Student" FromRole="Student" ToRole="StudentResponse" />
+  </EntityType>
+  <EntityType Name="StudentResponse">
+    <Key>
+      <PropertyRef Name="questionId" />
+      <PropertyRef Name="studentId" />
+    </Key>
+    <Property Name="questionId" Type="Int32" Nullable="false" />
+    <Property Name="studentId" Type="Int32" Nullable="false" />
+    <Property Name="response" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Question" Relationship="Self.FK_StudentResponse_Questions" FromRole="StudentResponse" ToRole="Questions" />
+    <NavigationProperty Name="Student" Relationship="Self.FK_StudentResponse_Student" FromRole="StudentResponse" ToRole="Student" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Resources_ProficiencyLevel">
+    <End Role="ProficiencyLevel" Type="Self.ProficiencyLevel" Multiplicity="1" />
+    <End Role="Resources" Type="Self.Resource" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProficiencyLevel">
+        <PropertyRef Name="proficiencyId" />
+      </Principal>
+      <Dependent Role="Resources">
+        <PropertyRef Name="proficiencyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_ProficiencyLevel">
+    <End Role="ProficiencyLevel" Type="Self.ProficiencyLevel" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProficiencyLevel">
+        <PropertyRef Name="proficiencyId" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="proficiencyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentResponse_Questions">
+    <End Role="Questions" Type="Self.Question" Multiplicity="1" />
+    <End Role="StudentResponse" Type="Self.StudentResponse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Questions">
+        <PropertyRef Name="questionId" />
+      </Principal>
+      <Dependent Role="StudentResponse">
+        <PropertyRef Name="questionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StudentResponse_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="StudentResponse" Type="Self.StudentResponse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="studentId" />
+      </Principal>
+      <Dependent Role="StudentResponse">
+        <PropertyRef Name="studentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="StudentTrackerEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ProficiencyLevels" EntityType="Self.ProficiencyLevel" />
+    <EntitySet Name="Questions" EntityType="Self.Question" />
+    <EntitySet Name="Resources" EntityType="Self.Resource" />
+    <EntitySet Name="Students" EntityType="Self.Student" />
+    <EntitySet Name="StudentResponses" EntityType="Self.StudentResponse" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK_Resources_ProficiencyLevel" Association="Self.FK_Resources_ProficiencyLevel">
+      <End Role="ProficiencyLevel" EntitySet="ProficiencyLevels" />
+      <End Role="Resources" EntitySet="Resources" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_ProficiencyLevel" Association="Self.FK_Student_ProficiencyLevel">
+      <End Role="ProficiencyLevel" EntitySet="ProficiencyLevels" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentResponse_Questions" Association="Self.FK_StudentResponse_Questions">
+      <End Role="Questions" EntitySet="Questions" />
+      <End Role="StudentResponse" EntitySet="StudentResponses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StudentResponse_Student" Association="Self.FK_StudentResponse_Student">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="StudentResponse" EntitySet="StudentResponses" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

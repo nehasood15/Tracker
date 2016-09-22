@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4bd2eb0439c24d6c8d2382be1c958826" Name="Diagram1">
+        <EntityTypeShape EntityType="StudentTrackerModel.ProficiencyLevel" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentTrackerModel.Question" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentTrackerModel.Resource" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentTrackerModel.Student" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentTrackerModel.StudentResponse" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="StudentTrackerModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="StudentTrackerModel.FK_Resources_ProficiencyLevel" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentTrackerModel.FK_Student_ProficiencyLevel" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentTrackerModel.FK_StudentResponse_Questions" ManuallyRouted="false" />
+        <AssociationConnector Association="StudentTrackerModel.FK_StudentResponse_Student" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

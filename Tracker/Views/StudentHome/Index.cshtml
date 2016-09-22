@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .logo {
+	text-align: center;
+    color: #A9A9A9;
+    border: 2px solid #FFF;
+    display: block;
+    margin: 60px 0px;
+    font-family: "Oxygen", sans-serif;
+    font-weight: 400;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font-size: 28px;
+}
+    .h3 {
+    font-family: 'Comic Sans MS';
+    text-align:center;
+    font-size: 16px;
+    font-style: italic;
+    }
+    .para {
+        font-family:'Comic Sans MS';
+        font-size: 16px;                   
+        }
+
+</style>
+
+<header>
+    <div>
+    <h1 class="logo"> Xero Canberra Student Hub</h1>
+        <p class="h3">One place for all your program activities</p>
+<br /><br/>    
+    </div>
+</header>
+<section>
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="well">
+                <p class="para">
+                    Register to get started......<br />
+                    <span class="glyphicon glyphicon-hand-right"></span> @Html.ActionLink("SigUp Now!", "SignUp", "StudentAccount")
+                </p>
+
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="well">
+                <p class="para">
+                    Already have an Account?? <br />
+                    <span class="glyphicon glyphicon-log-in"> </span> @Html.ActionLink("Login ", "Login", "StudentAccount")
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="well">
+                <p class="para">
+                    Know more about the program!!<br />
+                    <span class="glyphicon glyphicon-info-sign"></span> @Html.ActionLink("Know More!", "Index", "About")
+                </p>
+            </div>
+        </div>
+    </div>
+    <br />
+</section>
+
