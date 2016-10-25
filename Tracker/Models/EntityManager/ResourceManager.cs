@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Tracker.Models.DB;
+﻿using Tracker.Models.DB;
 using Tracker.Models.ViewModels;
+using System.Data.Entity;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Tracker.Models.EntityManager
 {
@@ -23,31 +22,13 @@ namespace Tracker.Models.EntityManager
                 db.SaveChanges();
             }
         }
-
-        public List<ResourceViewModel> GetResources()
+        public List<ResourceViewModel> GetAllResources()
         {
             using (StudentTrackerEntities db = new StudentTrackerEntities())
             {
-                List<ResourceViewModel> resources = db.Resources.Select(z => new ResourceViewModel {
-                    resourceId = z.resourceId,
-                    resourceName = z.resourceName,
-                    description = z.description,
-                    resourceLink =  z.resourceLink     }).ToList();
-
-                return resources;
-
-
-            }
-        }
-
-        public List<ResourceViewModel> GetResources(int proficiencyId)
-        {
-            using (StudentTrackerEntities db = new StudentTrackerEntities())
-            {
-                var resources = db.Resources.Where(x => x.proficiencyId.Equals(proficiencyId)).ToList();
-
+                List<Resource> resources = db.Resources.ToList();
                 List<ResourceViewModel> resourcesview = new List<ResourceViewModel>();
-                foreach( Resource r in resources)
+                foreach (Resource r in resources)
                 {
                     ResourceViewModel res = new ResourceViewModel();
                     res.resourceId = r.resourceId;
@@ -55,12 +36,31 @@ namespace Tracker.Models.EntityManager
                     res.resourceLink = r.resourceLink;
                     res.proficiencyId = r.proficiencyId;
                     res.description = r.description;
-
+                    resourcesview.Add(res);
                 }
-
                 return resourcesview;
 
+            }
+        }
 
+        public List<ResourceViewModel> GetResourcesBasedOnProficiencyLevel(int proficiencyId)
+        {
+            using (StudentTrackerEntities db = new StudentTrackerEntities())
+            {
+                var resources = db.Resources.Where(x => x.proficiencyId.Equals(proficiencyId)).ToList();
+
+                List<ResourceViewModel> resourcesview = new List<ResourceViewModel>();
+                foreach (Resource r in resources)
+                {
+                    ResourceViewModel res = new ResourceViewModel();
+                    res.resourceId = r.resourceId;
+                    res.resourceName = r.resourceName;
+                    res.resourceLink = r.resourceLink;
+                    res.proficiencyId = r.proficiencyId;
+                    res.description = r.description;
+                    resourcesview.Add(res);
+                }
+                return resourcesview;
             }
         }
     }

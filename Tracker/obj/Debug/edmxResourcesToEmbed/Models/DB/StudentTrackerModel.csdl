@@ -5,7 +5,7 @@
       <PropertyRef Name="proficiencyId" />
     </Key>
     <Property Name="proficiencyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="proficiencyLevel1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="proficiencyLevel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Resources" Relationship="Self.FK_Resources_ProficiencyLevel" FromRole="ProficiencyLevel" ToRole="Resources" />
     <NavigationProperty Name="Students" Relationship="Self.FK_Student_ProficiencyLevel" FromRole="ProficiencyLevel" ToRole="Student" />
@@ -43,6 +43,7 @@
     <Property Name="password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
     <NavigationProperty Name="ProficiencyLevel" Relationship="Self.FK_Student_ProficiencyLevel" FromRole="Student" ToRole="ProficiencyLevel" />
     <NavigationProperty Name="StudentResponses" Relationship="Self.FK_StudentResponse_Student" FromRole="Student" ToRole="StudentResponse" />
+    <Property Name="role" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
   </EntityType>
   <EntityType Name="StudentResponse">
     <Key>

@@ -77,6 +77,8 @@ C:\Users\Neha\Documents\Neha\Semester 4\Tech Project\Tracker\Tracker\bin\Microso
 C:\Users\Neha\Documents\Neha\Semester 4\Tech Project\Tracker\Tracker\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\Neha\Documents\Neha\Semester 4\Tech Project\Tracker\Tracker\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Neha\Documents\Neha\Semester 4\Tech Project\Tracker\Tracker\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Neha\Documents\Neha\Semester 4\Tech Project\Tracker\Tracker\obj\Debug\Tracker.csprojResolveAssemblyReference.cache
 C:\Users\Neha\Documents\Neha\Semester 4\Tech Project\Tracker\Tracker\obj\Debug\Tracker.dll
 C:\Users\Neha\Documents\Neha\Semester 4\Tech Project\Tracker\Tracker\obj\Debug\Tracker.pdb
+C:\Users\Neha\Documents\Neha\Semester 4\Tech Project\Tracker\Tracker\obj\Debug\Tracker.csprojResolveAssemblyReference.cache
+C:\Users\Neha\Documents\Neha\Semester 4\Tech Project\Tracker\Tracker\bin\BootstrapRating.dll
+C:\Users\Neha\Documents\Neha\Semester 4\Tech Project\Tracker\Tracker\bin\BootstrapRating.xml

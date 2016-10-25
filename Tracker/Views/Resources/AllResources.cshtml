@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Tracker.Models.ViewModels.ResourceViewModel>
+
+@{
+    ViewBag.Title = "AllResources";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>AllResources</h2>
+
+<div>
+    <h4>ResourceViewModel</h4>
+    <hr />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.resourceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.resourceLink)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.description)
+            </th>
+            <th>
+                    @Html.DisplayNameFor(model => model.proficiencyId)
+                </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.resourceName)
+                </td>
+                <td>
+                    <a href="@item.resourceLink" target="_blank">Click Here</a>
+                    @*@Html.DisplayFor(modelItem => item.resourceLink)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.proficiencyId)
+                    </td>
+                    @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.resourceId }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.resourceId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.resourceId })
+                    </td>*@
+            </tr>
+        }
+        </table>
+</div>

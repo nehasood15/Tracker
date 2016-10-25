@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
-
+using System.Collections;
 
 namespace Tracker.Models.ViewModels
 {
-    public class ResourceViewModel
+    public class ResourceViewModel 
     {
-        [Key]
+         [Key]
         [Required]
         public int resourceId { get; set; }
         [Display(Name = "Resource Name")]
@@ -23,12 +23,10 @@ namespace Tracker.Models.ViewModels
         [Display(Name = "Description")]
         [Required(ErrorMessage = "*")]
         public string description { get; set; }
-        
+
         [Display(Name = "Proficiency Level")]
         [Required(ErrorMessage = "*")]
-        public int proficiencyId { get; set; }
-
-
+        public int proficiencyId { get; set; }       
 
     }
 }

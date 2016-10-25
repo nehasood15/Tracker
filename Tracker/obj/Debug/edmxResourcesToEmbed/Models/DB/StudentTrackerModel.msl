@@ -5,7 +5,7 @@
       <EntityTypeMapping TypeName="StudentTrackerModel.ProficiencyLevel">
         <MappingFragment StoreEntitySet="ProficiencyLevel">
           <ScalarProperty Name="proficiencyId" ColumnName="proficiencyId" />
-          <ScalarProperty Name="proficiencyLevel1" ColumnName="proficiencyLevel" />
+          <ScalarProperty Name="proficiencyLevel" ColumnName="proficiencyLevel" />
           <ScalarProperty Name="description" ColumnName="description" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -33,6 +33,7 @@
     <EntitySetMapping Name="Students">
       <EntityTypeMapping TypeName="StudentTrackerModel.Student">
         <MappingFragment StoreEntitySet="Student">
+          <ScalarProperty Name="role" ColumnName="role" />
           <ScalarProperty Name="studentId" ColumnName="studentId" />
           <ScalarProperty Name="firstName" ColumnName="firstName" />
           <ScalarProperty Name="lastName" ColumnName="lastName" />

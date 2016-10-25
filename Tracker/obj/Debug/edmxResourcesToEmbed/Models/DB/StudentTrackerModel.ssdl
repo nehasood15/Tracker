@@ -37,6 +37,7 @@
     <Property Name="email" Type="nchar" MaxLength="100" Nullable="false" />
     <Property Name="proficiencyId" Type="int" Nullable="false" />
     <Property Name="password" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="role" Type="nchar" MaxLength="10" Nullable="false" />
   </EntityType>
   <EntityType Name="StudentResponse">
     <Key>

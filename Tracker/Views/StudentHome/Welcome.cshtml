@@ -1,11 +1,16 @@
-﻿@model Tracker.Models.ViewModels.StudentModel
+﻿
+@model Tracker.Models.ViewModels.StudentViewModel
 
 @{
     ViewBag.Title = "Welcome";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Welcome</h2>
-@Context.User.Identity.Name
+<h2>
+    Welcome
+    @Context.User.Identity.Name
+</h2>
+
+@Html.ActionLink("FillQuestionnaire", "FillAnswers2", "StudentResponse")
 
 @Html.ActionLink("Signout","SignOut","StudentAccount")

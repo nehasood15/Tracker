@@ -27,6 +27,7 @@ namespace Tracker.Models.DB
         public string email { get; set; }
         public int proficiencyId { get; set; }
         public string password { get; set; }
+        public string role { get; set; }
     
         public virtual ProficiencyLevel ProficiencyLevel { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

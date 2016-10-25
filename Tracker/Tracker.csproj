@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BootstrapRating, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\bootstrap-rating.mvc.1.0.0\lib\net452\BootstrapRating.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -199,11 +203,16 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AboutController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminStudentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RegistrationViewModelsController.cs" />
     <Compile Include="Controllers\ResourcesController.cs" />
     <Compile Include="Controllers\StudentAccountController.cs" />
     <Compile Include="Controllers\StudentHomeController.cs" />
+    <Compile Include="Controllers\StudentResponseController.cs" />
+    <Compile Include="Controllers\StudentResponsesController.cs" />
+    <Compile Include="Controllers\StudentsAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -242,21 +251,32 @@
       <DependentUpon>StudentTrackerModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EntityManager\ResourceManager.cs" />
+    <Compile Include="Models\EntityManager\ResponseManager.cs" />
     <Compile Include="Models\EntityManager\StudentManager.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ViewModels\ListStudentResponsesViewModel.cs" />
+    <Compile Include="Models\ViewModels\RegistrationViewModel.cs" />
     <Compile Include="Models\ViewModels\ResourceViewModel.cs" />
     <Compile Include="Models\ViewModels\StudentLoginView.cs" />
-    <Compile Include="Models\ViewModels\StudentModel.cs" />
+    <Compile Include="Models\ViewModels\StudentViewModel.cs" />
+    <Compile Include="Models\ViewModels\StudentResponseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AuthorizeRoleAttribute.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-rating.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\delete.gif" />
     <Content Include="Content\images\CanberraOffice.jpg" />
     <Content Include="Content\images\canberraTeam.JPG" />
     <Content Include="Content\images\vacationProgram.jpg" />
+    <Content Include="Content\rateit.css" />
+    <Content Include="Content\star.gif" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -273,8 +293,6 @@
     </Content>
     <Content Include="Scripts\ai.0.22.19-build00125.js" />
     <Content Include="Scripts\ai.0.22.19-build00125.min.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -285,15 +303,32 @@
     <Content Include="Models\DB\StudentTrackerModel.edmx.diagram">
       <DependentUpon>StudentTrackerModel.edmx</DependentUpon>
     </Content>
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap-rating\bootstrap-rating.js" />
+    <Content Include="Scripts\bootstrap-rating\bootstrap-rating.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Scripts\jquery.rateit.js" />
+    <Content Include="Scripts\jquery.rateit.min.js" />
+    <Content Include="Scripts\jquery.rateit.min.js.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -341,18 +376,38 @@
     <Content Include="Views\StudentAccount\LogIn.cshtml" />
     <Content Include="Views\About\Index.cshtml" />
     <Content Include="Views\Resources\AddNewResource.cshtml" />
-    <Content Include="Views\Resources\Index2.cshtml" />
+    <Content Include="Views\Resources\Index.cshtml" />
+    <Content Include="Views\StudentResponses\Create.cshtml" />
+    <Content Include="Views\StudentResponses\Delete.cshtml" />
+    <Content Include="Views\StudentResponses\Details.cshtml" />
+    <Content Include="Views\StudentResponses\Edit.cshtml" />
+    <Content Include="Views\StudentResponses\Index.cshtml" />
+    <Content Include="Views\RegistrationViewModels\Create.cshtml" />
+    <Content Include="Views\RegistrationViewModels\Delete.cshtml" />
+    <Content Include="Views\RegistrationViewModels\Details.cshtml" />
+    <Content Include="Views\RegistrationViewModels\Edit.cshtml" />
+    <Content Include="Views\RegistrationViewModels\Index.cshtml" />
+    <Content Include="Views\StudentResponse\FillAnswers2.cshtml" />
+    <Content Include="Views\StudentHome\Unauthorised.cshtml" />
+    <Content Include="Views\StudentHome\WelcomeAdmin.cshtml" />
+    <Content Include="Views\AdminStudent\Create.cshtml" />
+    <Content Include="Views\AdminStudent\Delete.cshtml" />
+    <Content Include="Views\AdminStudent\Details.cshtml" />
+    <Content Include="Views\AdminStudent\Edit.cshtml" />
+    <Content Include="Views\AdminStudent\Index.cshtml" />
+    <Content Include="Views\StudentsAdmin\Create.cshtml" />
+    <Content Include="Views\StudentsAdmin\Delete.cshtml" />
+    <Content Include="Views\StudentsAdmin\Details.cshtml" />
+    <Content Include="Views\StudentsAdmin\Edit.cshtml" />
+    <Content Include="Views\StudentsAdmin\Index.cshtml" />
+    <Content Include="Views\Resources\AllResources.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

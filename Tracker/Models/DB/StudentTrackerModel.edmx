@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="StudentTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="StudentTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="ProficiencyLevel">
           <Key>
             <PropertyRef Name="proficiencyId" />
@@ -42,6 +42,7 @@
           <Property Name="email" Type="nchar" MaxLength="100" Nullable="false" />
           <Property Name="proficiencyId" Type="int" Nullable="false" />
           <Property Name="password" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="role" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="StudentResponse">
           <Key>
@@ -134,8 +135,7 @@
             <End Role="StudentResponse" EntitySet="StudentResponse" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="StudentTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -144,7 +144,7 @@
             <PropertyRef Name="proficiencyId" />
           </Key>
           <Property Name="proficiencyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="proficiencyLevel1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="proficiencyLevel" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Resources" Relationship="Self.FK_Resources_ProficiencyLevel" FromRole="ProficiencyLevel" ToRole="Resources" />
           <NavigationProperty Name="Students" Relationship="Self.FK_Student_ProficiencyLevel" FromRole="ProficiencyLevel" ToRole="Student" />
@@ -182,6 +182,7 @@
           <Property Name="password" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="ProficiencyLevel" Relationship="Self.FK_Student_ProficiencyLevel" FromRole="Student" ToRole="ProficiencyLevel" />
           <NavigationProperty Name="StudentResponses" Relationship="Self.FK_StudentResponse_Student" FromRole="Student" ToRole="StudentResponse" />
+          <Property Name="role" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="StudentResponse">
           <Key>
@@ -286,7 +287,7 @@
             <EntityTypeMapping TypeName="StudentTrackerModel.ProficiencyLevel">
               <MappingFragment StoreEntitySet="ProficiencyLevel">
                 <ScalarProperty Name="proficiencyId" ColumnName="proficiencyId" />
-                <ScalarProperty Name="proficiencyLevel1" ColumnName="proficiencyLevel" />
+                <ScalarProperty Name="proficiencyLevel" ColumnName="proficiencyLevel" />
                 <ScalarProperty Name="description" ColumnName="description" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -314,6 +315,7 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="StudentTrackerModel.Student">
               <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="studentId" ColumnName="studentId" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />

@@ -11,53 +11,48 @@ namespace Tracker.Controllers
 {
     public class StudentAccountController : Controller
     {
+        StudentManager studentManager = new StudentManager();
+
         // GET: StudentAccount
-        //[AllowAnonymous]
-
+        [AllowAnonymous]
         [HttpGet]
-            public ActionResult SignUp()
-            {
-                return View();
-            }
+        public ActionResult SignUp()
+        {
+            return View();
+        }
 
-        //[AllowAnonymous]
-
+        [AllowAnonymous]
         [HttpPost]
-            public ActionResult SignUp(StudentModel student)
+        public ActionResult SignUp(StudentViewModel student)
+        {
+            //if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                if (!studentManager.IsEmailExisting(student.email))
                 {
-                    StudentManager StuManager = new StudentManager();
-                    if (!StuManager.IsEmailExisting(student.email))
-                    {
-                        StuManager.AddUserAccount(student);
-                        //FormsAuthentication.SetAuthCookie(student.firstName, false);
-                        return RedirectToAction("Welcome", "StudentHome");
-
-                    }
-                    else
-                        ModelState.AddModelError("", "Login Name already taken.");
+                    studentManager.AddUserAccount(student);
+                    FormsAuthentication.SetAuthCookie(student.email, false);
+                    return RedirectToAction("Welcome", "StudentHome");
                 }
-                return View();
+                else
+                    ModelState.AddModelError("", "Login Name already taken.");
             }
+            return View();
+        }
 
-        //[AllowAnonymous]
-
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult LogIn()
         {
             return View();
         }
 
-        //[Authorize]
-
+        [AllowAnonymous]
         [HttpPost]
-        public ActionResult LogIn(StudentLoginView StudentLoginView, string returnUrl)
+        public ActionResult LogIn(StudentLoginView StudentLoginView)
         {
             if (ModelState.IsValid)
             {
-                StudentManager StudentManger = new StudentManager();
-                string password = StudentManger.GetUserPassword(StudentLoginView.email);
+                string password = studentManager.GetUserPassword(StudentLoginView.email);
 
                 if (string.IsNullOrEmpty(password))
                     ModelState.AddModelError("", "The user login or password provided is incorrect.");
@@ -65,25 +60,30 @@ namespace Tracker.Controllers
                 {
                     if (StudentLoginView.password.Equals(password))
                     {
-                        //FormsAuthentication.SetAuthCookie(StudentLoginView.email, false);
-                        return RedirectToAction("Welcome", "StudentHome");
+                        FormsAuthentication.SetAuthCookie(StudentLoginView.email, false);
+                        string role = studentManager.GetUserRole(StudentLoginView.email);
+                        if (role == "admin")
+                        {
+                            return RedirectToAction("WelcomeAdmin", "StudentHome");
+                        }
+                        else if (role == "student")
+                        {
+                            return RedirectToAction("Welcome", "StudentHome");
+                        }
+                        else
+                            return RedirectToAction("Unauthorised", "StudentHome");
                     }
                     else
-                        return RedirectToAction("Welcome", "StudentHome");
-
-                   // ModelState.AddModelError("", "The password provided is incorrect.");
-                    
+                        ModelState.AddModelError("", "The password provided is incorrect.");
                 }
             }
-
-            return View(StudentLoginView);
+            return View();
         }
 
         public ActionResult SignOut()
         {
-            //FormsAuthentication.SignOut();
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index", "StudentHome");
         }
     }
-    }
-  
+}

@@ -32,10 +32,6 @@ namespace Tracker.Models.DB
         public virtual DbSet<StudentResponse> StudentResponses { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
 
-        public System.Data.Entity.DbSet<Tracker.Models.ViewModels.StudentModel> StudentModels { get; set; }
-
-        public System.Data.Entity.DbSet<Tracker.Models.ViewModels.StudentLoginView> StudentLoginViews { get; set; }
-
         public System.Data.Entity.DbSet<Tracker.Models.ViewModels.ResourceViewModel> ResourceViewModels { get; set; }
     }
 }

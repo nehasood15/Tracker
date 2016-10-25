@@ -22,7 +22,7 @@ namespace Tracker.Models.DB
         }
     
         public int proficiencyId { get; set; }
-        public string proficiencyLevel1 { get; set; }
+        public string proficiencyLevel { get; set; }
         public string description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
